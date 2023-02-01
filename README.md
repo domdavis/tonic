@@ -1,29 +1,17 @@
-# README #
+# tonic
 
-This README would normally document whatever steps are necessary to get your application up and running.
+[![Build](https://img.shields.io/bitbucket/pipelines/idomdavis/tonic/main?style=plastic)](https://bitbucket.org/idomdavis/tonic/addon/pipelines/home)
+[![Issues](https://img.shields.io/bitbucket/issues-raw/idomdavis/tonic?style=plastic)](https://bitbucket.org/idomdavis/tonic/issues)
+[![Pull Requests](https://img.shields.io/bitbucket/pr-raw/idomdavis/tonic?style=plastic)](https://bitbucket.org/idomdavis/tonic/pull-requests/)
+[![Go Doc](http://img.shields.io/badge/godoc-reference-5272B4.svg?style=plastic)](http://godoc.org/bitbucket.org/idomdavis/tonic)
 
-### What is this repository for? ###
+Tonic for your [Gin](https://gin-gonic.com). Provides some simple logging and
+security middleware as well as some useful endpoints.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## Usage
 
-### How do I get set up? ###
+```
+go get -u bitbucket.org/idomdavis/tonic
+```
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+See [tonic_test.go]() for example.
