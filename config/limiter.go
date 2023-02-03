@@ -17,14 +17,14 @@ type Limiter struct {
 
 	// Limit at which the limiter will trip (i.e. the number of time something
 	// needs to be seen before the limiter trips).
-	Limit int
+	Limit int64
 
 	// TTL for the items in the limiter.
 	TTL time.Duration
 }
 
 // DefaultLimit for the limiter. This is per TTL.
-const DefaultLimit = 100
+const DefaultLimit = int64(100)
 
 // Description for the Limiter.
 func (l *Limiter) Description() string {
@@ -55,7 +55,7 @@ func (l *Limiter) Register(opts goconfigure.OptionSet) {
 func (l *Limiter) Data() any {
 	return struct {
 		Name  string
-		Limit int
+		Limit int64
 		TTL   string
 	}{
 		Name:  goconfigure.Sanitise(l.Name, l.Name, goconfigure.UNSET),

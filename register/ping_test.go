@@ -30,3 +30,24 @@ func ExamplePing() {
 	// Output:
 	// 200 pong
 }
+
+func ExampleSilentPing() {
+	logger := tonic.NewLogger(logrus.StandardLogger())
+	router := gin.New()
+	router.Use(logger.Log)
+
+	register.SilentPing(router, logger)
+
+	w := httptest.NewRecorder()
+	req, err := http.NewRequest(http.MethodGet, "/ping", nil)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	router.ServeHTTP(w, req)
+	fmt.Println(w.Code, w.Body.String())
+
+	// Output:
+	// 200 pong
+}
