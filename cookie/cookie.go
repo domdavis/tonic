@@ -36,14 +36,14 @@ func Drop(c *gin.Context, security config.Security, claims ...string) error {
 		return fmt.Errorf("failed to drop authorisation cookie: %w", err)
 	}
 
-	c.SetCookie(Name, token, maxAge, "/", "", true, true)
+	c.SetCookie(Name, token, maxAge, "/", security.Domain, security.Secure(), true)
 
 	return nil
 }
 
 // Clear the authentication cookie.
-func Clear(c *gin.Context) {
-	c.SetCookie(Name, "", -1, "/", "", true, true)
+func Clear(c *gin.Context, security config.Security) {
+	c.SetCookie(Name, "", -1, "/", security.Domain, security.Secure(), true)
 }
 
 // Authenticate a request by checking for a JWT token in a cookie. Authenticate

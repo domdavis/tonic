@@ -32,3 +32,8 @@ func (t *TLS) Data() interface{} {
 		Certificate: goconfigure.Sanitise(t.Certificate, t.Certificate, goconfigure.UNSET),
 	}
 }
+
+// Secure returns true if TLS is configured.
+func (t *TLS) Secure() bool {
+	return t.Key != "" && t.Certificate != ""
+}

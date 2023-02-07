@@ -22,3 +22,18 @@ func ExampleTLS_Register() {
 	// Output:
 	// TLS settings: [Certificate Path:./tls.cert, Key Path:./tls.key]
 }
+
+func ExampleTLS_Secure() {
+	tls := &config.TLS{}
+
+	fmt.Println(tls.Secure())
+
+	tls.Key = "key"
+	tls.Certificate = "cert"
+
+	fmt.Println(tls.Secure())
+
+	// Output:
+	// false
+	// true
+}

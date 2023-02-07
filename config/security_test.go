@@ -20,5 +20,24 @@ func ExampleSecurity_Register() {
 	}
 
 	// Output:
-	// Security settings: [Secret:SET, Session TTL:12h0m0s, Timebox:1s]
+	// Security settings: [Domain:UNSET, Secret:SET, Session TTL:12h0m0s, Timebox:1s]
+}
+
+func ExampleSecurity_Secure() {
+	s := config.Security{}
+
+	fmt.Println(s.Secure())
+
+	s.Domain = "localhost"
+
+	fmt.Println(s.Secure())
+
+	s.Domain = "example.com"
+
+	fmt.Println(s.Secure())
+
+	// Output:
+	// false
+	// false
+	// true
 }
