@@ -44,6 +44,17 @@ func ExampleDrop() {
 	// 1
 }
 
+func ExampleClear() {
+	w := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(w)
+	cookie.Clear(c)
+
+	fmt.Println(w.Result().Cookies()[0].MaxAge)
+
+	// Output:
+	// -1
+}
+
 func TestDrop(t *testing.T) {
 	t.Run("A zero TTL will error", func(t *testing.T) {
 		t.Parallel()

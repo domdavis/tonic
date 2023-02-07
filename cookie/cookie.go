@@ -41,6 +41,11 @@ func Drop(c *gin.Context, security config.Security, claims ...string) error {
 	return nil
 }
 
+// Clear the authentication cookie.
+func Clear(c *gin.Context) {
+	c.SetCookie(Name, "", -1, "/", "", true, true)
+}
+
 // Authenticate a request by checking for a JWT token in a cookie. Authenticate
 // uses sensible defaults if no configuration is set, and will use a generated
 // secret if none is set. Failure to authenticate will abort the middleware
