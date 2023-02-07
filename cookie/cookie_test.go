@@ -45,9 +45,11 @@ func ExampleDrop() {
 }
 
 func ExampleClear() {
+	s := config.Security{Secret: "secret", SessionTTL: time.Hour}
+
 	w := httptest.NewRecorder()
 	c, _ := gin.CreateTestContext(w)
-	cookie.Clear(c)
+	cookie.Clear(c, s)
 
 	fmt.Println(w.Result().Cookies()[0].MaxAge)
 
