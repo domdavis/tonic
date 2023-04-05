@@ -3,7 +3,7 @@ package config
 import (
 	"time"
 
-	"bitbucket.org/idomdavis/goconfigure"
+	"bitbucket.org/idomdavis/gofigure"
 )
 
 // Security settings.
@@ -23,36 +23,36 @@ type Security struct {
 	Timebox time.Duration
 }
 
+// RandomSecret is used to tell tonic to use a random secret. The secret will
+// be generated on startup.
+const RandomSecret = "<random>"
+
+const (
+	defaultSessionTTL = time.Hour * 12
+	defaultTimebox    = time.Millisecond * 500
+)
+
 // Description for the Security settings.
 func (s *Security) Description() string {
 	return "Security settings"
 }
 
 // Register the Security options.
-func (s *Security) Register(opts goconfigure.OptionSet) {
-	opts.Add(opts.Option(&s.Secret, "", "secret",
-		"Secret used to encrypt tokens. Leave blank for a random secret"))
-	opts.Add(opts.Option(&s.Domain, "", "domain",
-		"Cookie domain, leave blank to allow insecure cookies"))
-	opts.Add(opts.Option(&s.SessionTTL, time.Hour*12, "session-ttl",
-		"TTL for sessions"))
-	opts.Add(opts.Option(&s.Timebox, time.Millisecond*500, "login-timebox",
-		"Minimum time it will take for a login attempt to return"))
-}
+func (s *Security) Register(c *gofigure.Configuration) {
+	group := c.Group("Security settings")
 
-// Data for the Security settings.
-func (s *Security) Data() any {
-	return struct {
-		Secret     string
-		Domain     string
-		SessionTTL string `json:"Session TTL"`
-		Timebox    string
-	}{
-		Secret:     goconfigure.Sanitise(s.Secret, goconfigure.SET, goconfigure.UNSET),
-		Domain:     goconfigure.Sanitise(s.Domain, s.Domain, goconfigure.UNSET),
-		SessionTTL: s.SessionTTL.String(),
-		Timebox:    s.Timebox.String(),
-	}
+	group.Add(gofigure.Optional("JWT Secret", "secret",
+		&s.Secret, RandomSecret, gofigure.NamedSources, gofigure.MaskSet,
+		"Secret used to encrypt tokens. The default is to use a random secret."))
+	group.Add(gofigure.Optional("Cookie Domain", "domain", &s.Domain, "",
+		gofigure.NamedSources, gofigure.MaskUnset,
+		"Cookie domain, leave blank to allow insecure cookies"))
+	group.Add(gofigure.Optional("Session TTL", "session-ttl", &s.SessionTTL,
+		defaultSessionTTL, gofigure.NamedSources, gofigure.ReportValue,
+		"TTL for sessions"))
+	group.Add(gofigure.Optional("Login Timebox", "login-timebox", &s.Timebox,
+		defaultTimebox, gofigure.NamedSources, gofigure.ReportValue,
+		"Minimum time it will take for a login attempt to return"))
 }
 
 // Secure returns true if a Domain is set and isn't localhost.

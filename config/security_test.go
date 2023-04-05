@@ -3,24 +3,54 @@ package config_test
 import (
 	"fmt"
 
-	"bitbucket.org/idomdavis/goconfigure"
+	"bitbucket.org/idomdavis/gofigure"
 	"bitbucket.org/idomdavis/tonic/config"
 )
 
 func ExampleSecurity_Register() {
-	s := goconfigure.NewSettings("TEST")
-	s.Add(&config.Security{})
+	c := gofigure.NewConfiguration("")
+	s := &config.Security{}
 
-	err := s.ParseUsing([]string{
-		"-secret", "1234", "--session-ttl", "12h", "--login-timebox", "1s",
-	}, goconfigure.ConsoleReporter{})
+	s.Register(c)
+
+	err := c.ParseUsing([]string{
+		"--secret", "1234", "--session-ttl", "12h", "--login-timebox", "1s",
+	})
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(c.Format(err))
 	}
 
-	// Output:
-	// Security settings: [Domain:UNSET, Secret:SET, Session TTL:12h0m0s, Timebox:1s]
+	for _, line := range c.Report() {
+		fmt.Println(line.Name)
+
+		for k, v := range line.Values {
+			fmt.Printf("  %s: %v\n", k, v)
+		}
+	}
+
+	fmt.Println()
+	fmt.Println(c.Usage())
+
+	// Unordered Output:
+	// Security settings
+	//   Cookie Domain: UNSET
+	//   Session TTL: 12h0m0s
+	//   Login Timebox: 1s
+	//   JWT Secret: SET
+	//
+	// usage:
+	//   JWT Secret [JSON key: "secret", env SECRET, --secret]
+	//     Secret used to encrypt tokens. The default is to use a random secret. (default: <random>)
+	//
+	//   Cookie Domain [JSON key: "domain", env DOMAIN, --domain]
+	//     Cookie domain, leave blank to allow insecure cookies
+	//
+	//   Session TTL [JSON key: "session-ttl", env SESSION-TTL, --session-ttl]
+	//     TTL for sessions (default: 12h0m0s)
+	//
+	//   Login Timebox [JSON key: "login-timebox", env LOGIN-TIMEBOX, --login-timebox]
+	//     Minimum time it will take for a login attempt to return (default: 500ms)
 }
 
 func ExampleSecurity_Secure() {

@@ -8,6 +8,7 @@ import (
 	"io"
 	"time"
 
+	"bitbucket.org/idomdavis/tonic/config"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -88,7 +89,7 @@ func (s *Signatory) Initialise() {
 		defaultSecret = GenerateSecret(rand.Reader)
 	}
 
-	if s.Secret == "" {
+	if s.Secret == "" || s.Secret == config.RandomSecret {
 		s.Secret = defaultSecret
 	}
 

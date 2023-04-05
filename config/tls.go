@@ -1,7 +1,7 @@
 package config
 
 import (
-	"bitbucket.org/idomdavis/goconfigure"
+	"bitbucket.org/idomdavis/gofigure"
 )
 
 // TLS options.
@@ -19,18 +19,14 @@ func (t *TLS) Description() string {
 }
 
 // Register the TLS options.
-func (t *TLS) Register(opts goconfigure.OptionSet) {
-	opts.Add(opts.Option(&t.Key, "", "tls-key", "Path to the TLS key"))
-	opts.Add(opts.Option(&t.Certificate, "", "tls-certificate",
-		"Path to the TLS certificate"))
-}
+func (t *TLS) Register(c *gofigure.Configuration) {
+	group := c.Group("TLS settings")
 
-// Data for the TLS settings.
-func (t *TLS) Data() interface{} {
-	return TLS{
-		Key:         goconfigure.Sanitise(t.Key, t.Key, goconfigure.UNSET),
-		Certificate: goconfigure.Sanitise(t.Certificate, t.Certificate, goconfigure.UNSET),
-	}
+	group.Add(gofigure.Optional("Key Path", "tls-key", &t.Key, "",
+		gofigure.NamedSources, gofigure.HideUnset, "Path to the TLS key"))
+	group.Add(gofigure.Optional("Certificate Path", "tls-certificate",
+		&t.Certificate, "", gofigure.NamedSources, gofigure.HideUnset,
+		"Path to the TLS certificate"))
 }
 
 // Secure returns true if TLS is configured.
