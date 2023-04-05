@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"bitbucket.org/idomdavis/goconfigure"
+	"bitbucket.org/idomdavis/gofigure"
 )
 
 // Limiter configuration.
@@ -23,43 +23,37 @@ type Limiter struct {
 	TTL time.Duration
 }
 
-// DefaultLimit for the limiter. This is per TTL.
+// DefaultLimit for the limiter.
 const DefaultLimit = int64(100)
 
-// Description for the Limiter.
-func (l *Limiter) Description() string {
-	const description = "Limiter Settings"
-
-	if l.Name == "" {
-		return description
-	}
-
-	return fmt.Sprintf("%s %s", l.Name, description)
-}
+// DefaultTTL for the limiter.
+const DefaultTTL = time.Hour
 
 // Register the limiter.
-func (l *Limiter) Register(opts goconfigure.OptionSet) {
-	var name string
+func (l *Limiter) Register(c *gofigure.Configuration) {
+	var (
+		separator string
+		spacer    string
+	)
 
 	if l.Name != "" {
-		name = fmt.Sprintf("%s-", strings.ToLower(l.Name))
+		separator = "-"
+		spacer = " "
 	}
 
-	opts.Add(opts.Option(&l.Limit, DefaultLimit, fmt.Sprintf("%slimiter-limit", name),
+	flag := strings.ToLower(l.Name)
+	group := c.Group("Limiter settings")
+
+	group.Add(gofigure.Optional(fmt.Sprintf("%s%sLimiter Name", l.Name, spacer),
+		fmt.Sprintf("%s%slimiter-name", flag, separator), &l.Name, l.Name,
+		gofigure.Reference, gofigure.HideValue,
+		"Name of the limiter, should be set when the limiter is instantiated"))
+	group.Add(gofigure.Optional(fmt.Sprintf("%s%sLimiter Limit", l.Name, spacer),
+		fmt.Sprintf("%s%slimiter-limit", flag, separator), &l.Limit, DefaultLimit,
+		gofigure.NamedSources, gofigure.ReportValue,
 		"Number of times something needs to be seen before the limiter trips"))
-	opts.Add(opts.Option(&l.TTL, time.Second, fmt.Sprintf("%slimiter-ttl", name),
-		"Time-to-live for items in the limiter"))
-}
-
-// Data for the Limiter.
-func (l *Limiter) Data() any {
-	return struct {
-		Name  string
-		Limit int64
-		TTL   string
-	}{
-		Name:  goconfigure.Sanitise(l.Name, l.Name, goconfigure.UNSET),
-		Limit: l.Limit,
-		TTL:   l.TTL.String(),
-	}
+	group.Add(gofigure.Optional(fmt.Sprintf("%s%sLimiter TTL", l.Name, spacer),
+		fmt.Sprintf("%s%slimiter-ttl", flag, separator), &l.TTL, DefaultTTL,
+		gofigure.NamedSources, gofigure.ReportValue,
+		"Time period the limiter will check over before the limiter trips"))
 }
