@@ -32,11 +32,6 @@ const (
 	defaultTimebox    = time.Millisecond * 500
 )
 
-// Description for the Security settings.
-func (s *Security) Description() string {
-	return "Security settings"
-}
-
 // Register the Security options.
 func (s *Security) Register(c *gofigure.Configuration) {
 	group := c.Group("Security settings")

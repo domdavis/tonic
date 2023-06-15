@@ -13,11 +13,6 @@ type TLS struct {
 	Certificate string `json:"Certificate Path"`
 }
 
-// Description for the TLS settings.
-func (t *TLS) Description() string {
-	return "TLS settings"
-}
-
 // Register the TLS options.
 func (t *TLS) Register(c *gofigure.Configuration) {
 	group := c.Group("TLS settings")

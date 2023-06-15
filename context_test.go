@@ -3,6 +3,8 @@ package tonic_test
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"bitbucket.org/idomdavis/tonic"
@@ -33,6 +35,18 @@ func ExampleValue() {
 	s = tonic.Value[string](ctx, "k")
 
 	fmt.Println(s)
+
+	// Output:
+	// v
+}
+
+func ExampleConvert() {
+	g := &gin.Context{Request: httptest.NewRequest(http.MethodGet, "http://example.com", nil)}
+	g.Set("k", "v")
+
+	ctx := tonic.Convert(g)
+
+	fmt.Println(tonic.Value[string](ctx, "k"))
 
 	// Output:
 	// v
