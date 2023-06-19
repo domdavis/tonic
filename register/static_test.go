@@ -5,16 +5,15 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"strings"
+	"testing"
 
-	"bitbucket.org/idomdavis/tonic"
 	"bitbucket.org/idomdavis/tonic/register"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"github.com/stretchr/testify/assert"
 )
 
 func ExampleStatic() {
 	router := gin.New()
-	router.Use(tonic.NewLogger(logrus.StandardLogger()).Log)
 
 	if err := register.Static("./invalid", router); err != nil {
 		fmt.Println(err)
@@ -47,4 +46,23 @@ func ExampleStatic() {
 	// 200 /root <nil>
 	// 200 /dir/branch <nil>
 	// 404  <nil>
+}
+
+func TestStatic(t *testing.T) {
+	t.Run("Blank content roots are ignored", func(t *testing.T) {
+		t.Parallel()
+
+		router := gin.New()
+		err := register.Static("", router)
+
+		assert.NoError(t, err)
+
+		w := httptest.NewRecorder()
+		req, err := http.NewRequest(http.MethodGet, "/root", nil)
+
+		router.ServeHTTP(w, req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusNotFound, w.Code)
+	})
 }

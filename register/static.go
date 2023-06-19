@@ -7,8 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Static content will be served from the content root against the router.
+// Static content will be served from the content root against the router. A
+// blank contentRoot will result in no static content being registered.
 func Static(contentRoot string, router *gin.Engine) error {
+	if contentRoot == "" {
+		return nil
+	}
+
 	files, err := os.ReadDir(contentRoot)
 
 	if err != nil {

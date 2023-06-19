@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 
 	"bitbucket.org/idomdavis/tonic"
+	"bitbucket.org/idomdavis/tonic/middleware"
 	"bitbucket.org/idomdavis/tonic/register"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -13,7 +14,7 @@ import (
 
 func ExampleGNU() {
 	router := gin.New()
-	router.Use(tonic.NewLogger(logrus.StandardLogger()).Log)
+	router.Use(middleware.LogrusReporter(logrus.StandardLogger()).Log)
 	router.Use(tonic.GNU)
 
 	register.Ping(router)

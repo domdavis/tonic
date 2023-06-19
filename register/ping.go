@@ -3,7 +3,7 @@ package register
 import (
 	"net/http"
 
-	"bitbucket.org/idomdavis/tonic"
+	"bitbucket.org/idomdavis/tonic/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +19,7 @@ func Ping(r *gin.Engine) {
 
 // SilentPing calls Ping, but also adds the endpoint to the skip list on the
 // logger.
-func SilentPing(r *gin.Engine, logger *tonic.Logger) {
-	logger.Skip(ping)
+func SilentPing(r *gin.Engine, reporter *middleware.Reporter) {
+	reporter.Skip(ping)
 	Ping(r)
 }

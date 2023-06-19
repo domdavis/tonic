@@ -17,7 +17,7 @@ lint:
 	golangci-lint run
 
 test:
-	go test -v -covermode=count ./...
+	go test -covermode=count ./...
 
 doc:
 	godoc --http=:6060

@@ -10,6 +10,7 @@ import (
 	"bitbucket.org/idomdavis/tonic"
 	"bitbucket.org/idomdavis/tonic/config"
 	"bitbucket.org/idomdavis/tonic/cookie"
+	"bitbucket.org/idomdavis/tonic/middleware"
 	"bitbucket.org/idomdavis/tonic/register"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -112,7 +113,7 @@ func TestAuthenticate(t *testing.T) {
 	t.Run("A valid cookie will authenticate", func(t *testing.T) {
 		t.Parallel()
 
-		logger := tonic.NewLogger(logrus.StandardLogger())
+		logger := middleware.LogrusReporter(logrus.StandardLogger())
 		logger.Skip(endpoint)
 
 		router := gin.New()
@@ -150,7 +151,7 @@ func TestAuthenticate(t *testing.T) {
 	t.Run("An invalid cookie will fail", func(t *testing.T) {
 		t.Parallel()
 
-		logger := tonic.NewLogger(logrus.StandardLogger())
+		logger := middleware.LogrusReporter(logrus.StandardLogger())
 		logger.Skip(endpoint)
 
 		router := gin.New()
@@ -181,7 +182,7 @@ func TestAuthenticate(t *testing.T) {
 	t.Run("A missing cookie will fail", func(t *testing.T) {
 		t.Parallel()
 
-		logger := tonic.NewLogger(logrus.StandardLogger())
+		logger := middleware.LogrusReporter(logrus.StandardLogger())
 		logger.Skip(endpoint)
 
 		router := gin.New()
@@ -203,7 +204,7 @@ func TestAuthenticate(t *testing.T) {
 	t.Run("Redirects will occur on auth failure", func(t *testing.T) {
 		t.Parallel()
 
-		logger := tonic.NewLogger(logrus.StandardLogger())
+		logger := middleware.LogrusReporter(logrus.StandardLogger())
 		logger.Skip(endpoint)
 
 		router := gin.New()
