@@ -5,15 +5,12 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"bitbucket.org/idomdavis/tonic"
 	"bitbucket.org/idomdavis/tonic/register"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
 func ExampleCoffee() {
 	router := gin.New()
-	router.Use(tonic.NewLogger(logrus.StandardLogger()).Log)
 
 	register.Coffee(router)
 

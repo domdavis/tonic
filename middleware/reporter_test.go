@@ -1,4 +1,4 @@
-package tonic_test
+package middleware_test
 
 import (
 	"fmt"
@@ -7,16 +7,16 @@ import (
 	"testing"
 	"time"
 
-	"bitbucket.org/idomdavis/tonic"
+	"bitbucket.org/idomdavis/tonic/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/assert"
 )
 
-func ExampleLogger_Skip() {
+func ExampleReporter_Skip() {
 	instance, hook := test.NewNullLogger()
-	logger := tonic.NewLogger(instance)
+	logger := middleware.LogrusReporter(instance)
 	logger.Skip("/skip")
 
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
@@ -38,10 +38,10 @@ func ExampleLogger_Skip() {
 }
 
 func ExampleRound() {
-	fmt.Println(tonic.Round(time.Millisecond))
-	fmt.Println(tonic.Round(time.Millisecond + time.Nanosecond))
-	fmt.Println(tonic.Round(time.Second + time.Millisecond))
-	fmt.Println(tonic.Round(time.Second + time.Nanosecond))
+	fmt.Println(middleware.Round(time.Millisecond))
+	fmt.Println(middleware.Round(time.Millisecond + time.Nanosecond))
+	fmt.Println(middleware.Round(time.Second + time.Millisecond))
+	fmt.Println(middleware.Round(time.Second + time.Nanosecond))
 
 	// Output:
 	// 1ms
@@ -55,7 +55,7 @@ func TestLogger_Log(t *testing.T) {
 		t.Parallel()
 
 		instance, hook := test.NewNullLogger()
-		logger := tonic.NewLogger(instance)
+		logger := middleware.LogrusReporter(instance)
 		c, _ := gin.CreateTestContext(httptest.NewRecorder())
 		c.Request = httptest.NewRequest(http.MethodGet, "/logged", nil)
 
@@ -68,7 +68,7 @@ func TestLogger_Log(t *testing.T) {
 		t.Parallel()
 
 		instance, hook := test.NewNullLogger()
-		logger := tonic.NewLogger(instance)
+		logger := middleware.LogrusReporter(instance)
 
 		c, _ := gin.CreateTestContext(httptest.NewRecorder())
 		c.Request = httptest.NewRequest(http.MethodGet, "/logged", nil)
@@ -82,7 +82,7 @@ func TestLogger_Log(t *testing.T) {
 		t.Parallel()
 
 		instance, hook := test.NewNullLogger()
-		logger := tonic.NewLogger(instance)
+		logger := middleware.LogrusReporter(instance)
 
 		w := httptest.NewRecorder()
 		c, _ := gin.CreateTestContext(w)
@@ -98,7 +98,7 @@ func TestLogger_Log(t *testing.T) {
 		t.Parallel()
 
 		instance, hook := test.NewNullLogger()
-		logger := tonic.NewLogger(instance)
+		logger := middleware.LogrusReporter(instance)
 
 		w := httptest.NewRecorder()
 		c, _ := gin.CreateTestContext(w)
@@ -109,17 +109,15 @@ func TestLogger_Log(t *testing.T) {
 
 		assert.Equal(t, logrus.WarnLevel, hook.LastEntry().Level)
 	})
+
 	t.Run("Setting no logger will not panic", func(t *testing.T) {
 		t.Parallel()
 
-		logger := &tonic.Logger{}
-		hook := test.NewGlobal()
+		logger := middleware.NewReporter(nil)
 		c, _ := gin.CreateTestContext(httptest.NewRecorder())
 		c.Request = httptest.NewRequest(http.MethodGet, "/logged", nil)
 
 		logger.Log(c)
-
-		assert.Equal(t, hook.LastEntry().Level, logrus.InfoLevel)
 	})
 }
 
@@ -128,7 +126,7 @@ func TestLogger_Embellish(t *testing.T) {
 		t.Parallel()
 
 		instance, hook := test.NewNullLogger()
-		logger := tonic.NewLogger(instance)
+		logger := middleware.LogrusReporter(instance)
 
 		c, _ := gin.CreateTestContext(httptest.NewRecorder())
 		c.Request = httptest.NewRequest(http.MethodGet, "/logged", nil)
@@ -149,7 +147,7 @@ func TestLogger_Embellish(t *testing.T) {
 		t.Parallel()
 
 		instance, hook := test.NewNullLogger()
-		logger := tonic.NewLogger(instance)
+		logger := middleware.LogrusReporter(instance)
 
 		c, _ := gin.CreateTestContext(httptest.NewRecorder())
 		c.Request = httptest.NewRequest(http.MethodGet, "/logged", nil)

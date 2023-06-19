@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"bitbucket.org/idomdavis/tonic"
+	"bitbucket.org/idomdavis/tonic/middleware"
 	"bitbucket.org/idomdavis/tonic/register"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -13,7 +13,6 @@ import (
 
 func ExamplePing() {
 	router := gin.New()
-	router.Use(tonic.NewLogger(logrus.StandardLogger()).Log)
 
 	register.Ping(router)
 
@@ -32,7 +31,7 @@ func ExamplePing() {
 }
 
 func ExampleSilentPing() {
-	logger := tonic.NewLogger(logrus.StandardLogger())
+	logger := middleware.LogrusReporter(logrus.StandardLogger())
 	router := gin.New()
 	router.Use(logger.Log)
 

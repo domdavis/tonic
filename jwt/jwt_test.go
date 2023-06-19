@@ -11,6 +11,7 @@ import (
 	"bitbucket.org/idomdavis/tonic"
 	"bitbucket.org/idomdavis/tonic/config"
 	"bitbucket.org/idomdavis/tonic/jwt"
+	"bitbucket.org/idomdavis/tonic/middleware"
 	"bitbucket.org/idomdavis/tonic/register"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -108,7 +109,7 @@ func TestAuthenticate(t *testing.T) {
 
 		security := config.Security{Secret: "secret", SessionTTL: time.Hour}
 
-		logger := tonic.NewLogger(logrus.StandardLogger())
+		logger := middleware.LogrusReporter(logrus.StandardLogger())
 		logger.Skip(endpoint)
 
 		router := gin.New()
@@ -140,7 +141,7 @@ func TestAuthenticate(t *testing.T) {
 
 		security := config.Security{Secret: "secret", SessionTTL: time.Hour}
 
-		logger := tonic.NewLogger(logrus.StandardLogger())
+		logger := middleware.LogrusReporter(logrus.StandardLogger())
 		logger.Skip(endpoint)
 
 		router := gin.New()

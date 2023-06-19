@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"time"
 
@@ -12,35 +13,48 @@ import (
 	"bitbucket.org/idomdavis/tonic/config"
 	"bitbucket.org/idomdavis/tonic/cookie"
 	"bitbucket.org/idomdavis/tonic/jwt"
-	"bitbucket.org/idomdavis/tonic/register"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
-var Security = config.Security{
-	Secret:     "secret",
-	SessionTTL: time.Second * 60,
-	Timebox:    100,
+var Config = struct {
+	config.Server
+	config.Security
+	config.Limiter
+}{
+	Server: config.Server{
+		Templates:   "testdata/templates/*",
+		Static:      "testdata/static",
+		Development: true,
+	},
+	Security: config.Security{
+		Secret:     "secret",
+		SessionTTL: time.Second * 60,
+		Timebox:    100,
+	},
+	Limiter: config.Limiter{
+		Limit: 100,
+		TTL:   60,
+	},
 }
 
 //nolint:misspell // HTTP status codes are in American English.
 func Example_tonic() {
-	logger := tonic.NewLogger(logrus.StandardLogger())
-	logger.Skip("/ping")
+	router, err := tonic.New(Config.Server, Config.Limiter)
 
-	router := gin.New()
-	router.Use(logger.Log)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(-1)
+	}
+
 	router.GET("/login", Login)
 	router.GET("/token", Token)
 
-	register.Ping(router)
-
 	webapp := router.Group("/webapp")
-	webapp.Use(cookie.Authenticate(Security, "/webapp/login"))
+	webapp.Use(cookie.Authenticate(Config.Security, "/webapp/login"))
 	webapp.GET("/page", Endpoint)
 
 	api := router.Group("/api")
-	api.Use(jwt.Authenticate(Security))
+	api.Use(jwt.Authenticate(Config.Security))
 	api.GET("/action", Endpoint)
 
 	r := call(router, "/ping", nil)
@@ -101,11 +115,11 @@ func call(router *gin.Engine, endpoint string, response *http.Response) *httptes
 // Login using a constant time algorithm. No actual authentication is done for
 // this example.
 func Login(c *gin.Context) {
-	d := tonic.Timebox(Security.Timebox)
+	d := tonic.Timebox(Config.Security.Timebox)
 
 	c.Set("user", "logged in")
 
-	err := cookie.Drop(c, Security, "user")
+	err := cookie.Drop(c, Config.Security, "user")
 
 	d.Wait()
 
@@ -125,5 +139,5 @@ func Endpoint(c *gin.Context) {
 
 // Token sets the JWT on the response.
 func Token(c *gin.Context) {
-	jwt.Sign(c, Security)
+	jwt.Sign(c, Config.Security)
 }
