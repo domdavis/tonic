@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 	"testing"
+	"time"
 
 	"bitbucket.org/idomdavis/tonic"
 	"bitbucket.org/idomdavis/tonic/config"
@@ -29,10 +30,10 @@ func TestListen(t *testing.T) {
 
 		assert.NoError(t, err)
 
-		res, err := http.DefaultClient.Do(req)
+		code, err := connect(req)
 
 		assert.NoError(t, err)
-		assert.Equal(t, http.StatusOK, res.StatusCode)
+		assert.Equal(t, http.StatusOK, code)
 
 		_ = s.Close()
 	})
@@ -56,12 +57,10 @@ func TestListen(t *testing.T) {
 
 		assert.NoError(t, err)
 
-		tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
-		client := &http.Client{Transport: tr}
-		res, err := client.Do(req)
+		code, err := connect(req)
 
 		assert.NoError(t, err)
-		assert.Equal(t, http.StatusOK, res.StatusCode)
+		assert.Equal(t, http.StatusOK, code)
 
 		_ = s.Close()
 	})
@@ -75,4 +74,26 @@ func Port() int {
 
 	//nolint:forcetypeassert // We know it's one of these.
 	return listener.Addr().(*net.TCPAddr).Port
+}
+
+func connect(req *http.Request) (int, error) {
+	var (
+		err error
+		res *http.Response
+	)
+
+	tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
+	client := &http.Client{Transport: tr}
+
+	for i := 0; i <= 5; i++ {
+		res, err = client.Do(req)
+
+		if err == nil {
+			return res.StatusCode, nil
+		}
+
+		time.Sleep(time.Second)
+	}
+
+	return 0, fmt.Errorf("connection error: %w", err)
 }
