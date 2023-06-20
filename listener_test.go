@@ -14,10 +14,9 @@ import (
 
 const ping = "%s://localhost:%d/ping"
 
+//nolint:paralleltest // Functional test, parallel introduces race conditions.
 func TestListen(t *testing.T) {
 	t.Run("Listen works for HTTP", func(t *testing.T) {
-		t.Parallel()
-
 		port := Port()
 		settings := config.Server{Port: port, Development: true}
 		r, err := tonic.New(settings)
@@ -39,8 +38,6 @@ func TestListen(t *testing.T) {
 	})
 
 	t.Run("Listen works for HTTPS", func(t *testing.T) {
-		t.Parallel()
-
 		port := Port()
 		settings := config.Server{
 			Port:        port,
