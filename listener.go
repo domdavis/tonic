@@ -12,7 +12,7 @@ import (
 // Listen on the given port, using TLS if this is configured in the settings.
 // Listen is non-blocking, the returned Done channel can be used to block.
 // Call Server.Cancel to cancel Listening.
-func Listen(settings config.Server, router http.Handler) (*http.Server, chan<- error) {
+func Listen(settings config.Server, router http.Handler) (*http.Server, <-chan error) {
 	var protocol string
 
 	done := make(chan error)

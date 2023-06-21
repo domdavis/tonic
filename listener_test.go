@@ -15,6 +15,23 @@ import (
 
 const ping = "%s://localhost:%d/ping"
 
+func ExampleListen() {
+	settings := config.Server{Development: true}
+
+	r, err := tonic.New(settings)
+
+	if err != nil {
+		panic(err)
+	}
+
+	// Populate routes here.
+
+	_, c := tonic.Listen(settings, r)
+
+	// Block until the listener shuts down.
+	fmt.Println(<-c)
+}
+
 //nolint:paralleltest // Functional test, parallel introduces race conditions.
 func TestListen(t *testing.T) {
 	t.Run("Listen works for HTTP", func(t *testing.T) {
