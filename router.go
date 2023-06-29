@@ -4,9 +4,9 @@ package tonic
 import (
 	"fmt"
 
-	"bitbucket.org/idomdavis/tonic/config"
-	"bitbucket.org/idomdavis/tonic/middleware"
-	"bitbucket.org/idomdavis/tonic/register"
+	"github.com/domdavis/tonic/config"
+	"github.com/domdavis/tonic/middleware"
+	"github.com/domdavis/tonic/register"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/ulule/limiter/v3"

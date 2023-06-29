@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"bitbucket.org/idomdavis/tonic"
+	"github.com/domdavis/tonic"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )

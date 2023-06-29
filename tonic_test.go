@@ -9,10 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"bitbucket.org/idomdavis/tonic"
-	"bitbucket.org/idomdavis/tonic/config"
-	"bitbucket.org/idomdavis/tonic/cookie"
-	"bitbucket.org/idomdavis/tonic/jwt"
+	"github.com/domdavis/tonic"
+	"github.com/domdavis/tonic/config"
+	"github.com/domdavis/tonic/cookie"
+	"github.com/domdavis/tonic/jwt"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,9 +1,10 @@
 # tonic
 
-[![Build](https://img.shields.io/bitbucket/pipelines/idomdavis/tonic/main?style=plastic)](https://bitbucket.org/idomdavis/tonic/addon/pipelines/home)
-[![Issues](https://img.shields.io/bitbucket/issues-raw/idomdavis/tonic?style=plastic)](https://bitbucket.org/idomdavis/tonic/issues)
-[![Pull Requests](https://img.shields.io/bitbucket/pr-raw/idomdavis/tonic?style=plastic)](https://bitbucket.org/idomdavis/tonic/pull-requests/)
-[![Go Doc](http://img.shields.io/badge/godoc-reference-5272B4.svg?style=plastic)](http://godoc.org/bitbucket.org/idomdavis/tonic)
+![Build](https://img.shields.io/github/actions/workflow/status/domdavis/tonic/build.yml)
+![Issues](https://img.shields.io/github/issues/domdavis/tonic?style=plastic)
+![Pull Requests](https://img.shields.io/github/issues-pr/domdavis/tonic?style=plastic)
+[![Go Doc](http://img.shields.io/badge/godoc-reference-5272B4.svg?style=plastic)](http://godoc.org/bitbucket.org.idomdavis/tonic)
+[![License](https://img.shields.io/badge/license-MIT-green?style=plastic)](https://opensource.org/licenses/MIT)
 
 Tonic for your [Gin](https://gin-gonic.com). Provides some simple logging and
 security middleware as well as some useful endpoints.
@@ -11,7 +12,7 @@ security middleware as well as some useful endpoints.
 ## Usage
 
 ```
-go get -u bitbucket.org/idomdavis/tonic
+go get -u github.com/domdavis/tonic
 ```
 
 See [tonic_test.go]() for example.
