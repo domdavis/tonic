@@ -3,7 +3,7 @@ package middleware_test
 import (
 	"testing"
 
-	"bitbucket.org/idomdavis/tonic/middleware"
+	"github.com/domdavis/tonic/middleware"
 )
 
 func TestLogrus_Log(t *testing.T) {

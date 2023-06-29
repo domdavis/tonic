@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"bitbucket.org/idomdavis/gofigure"
+	"github.com/domdavis/gofigure"
 )
 
 // Limiter configuration.

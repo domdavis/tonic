@@ -3,8 +3,8 @@ package config_test
 import (
 	"fmt"
 
-	"bitbucket.org/idomdavis/gofigure"
-	"bitbucket.org/idomdavis/tonic/config"
+	"github.com/domdavis/gofigure"
+	"github.com/domdavis/tonic/config"
 )
 
 func ExampleServer_Register() {
