@@ -1,6 +1,6 @@
 module github.com/domdavis/tonic
 
-go 1.19
+go 1.20
 
 require (
 	github.com/domdavis/gofigure v1.0.0
