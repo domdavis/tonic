@@ -101,7 +101,8 @@ linters-settings:
       - error
       - empty
       - stdlib
-      - ^([A-Z])$
+      - generic
+      - (or|er)$
   lll:
     line-length: 120
     tab-width: 4
