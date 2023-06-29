@@ -46,10 +46,10 @@ func ExampleSecurity_Register() {
 	//   Cookie Domain [JSON key: "domain", env DOMAIN, --domain]
 	//     Cookie domain, leave blank to allow insecure cookies
 	//
-	//   Session TTL [JSON key: "session-ttl", env SESSION-TTL, --session-ttl]
+	//   Session TTL [JSON key: "session-ttl", env SESSION_TTL, --session-ttl]
 	//     TTL for sessions (default: 12h0m0s)
 	//
-	//   Login Timebox [JSON key: "login-timebox", env LOGIN-TIMEBOX, --login-timebox]
+	//   Login Timebox [JSON key: "login-timebox", env LOGIN_TIMEBOX, --login-timebox]
 	//     Minimum time it will take for a login attempt to return (default: 500ms)
 }
 

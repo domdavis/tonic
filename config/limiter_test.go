@@ -44,15 +44,15 @@ func ExampleLimiter_Register() {
 	//   Sub Limiter TTL: 1h0m0s
 	//
 	// usage:
-	//   Limiter Limit [JSON key: "limiter-limit", env LIMITER-LIMIT, --limiter-limit]
+	//   Limiter Limit [JSON key: "limiter-limit", env LIMITER_LIMIT, --limiter-limit]
 	//     Number of times something needs to be seen before the limiter trips (default: 100)
 	//
-	//   Limiter TTL [JSON key: "limiter-ttl", env LIMITER-TTL, --limiter-ttl]
+	//   Limiter TTL [JSON key: "limiter-ttl", env LIMITER_TTL, --limiter-ttl]
 	//     Time period the limiter will check over before the limiter trips (default: 1h0m0s)
 	//
-	//   Sub Limiter Limit [JSON key: "sub-limiter-limit", env SUB-LIMITER-LIMIT, --sub-limiter-limit]
+	//   Sub Limiter Limit [JSON key: "sub-limiter-limit", env SUB_LIMITER_LIMIT, --sub-limiter-limit]
 	//     Number of times something needs to be seen before the limiter trips (default: 100)
 	//
-	//   Sub Limiter TTL [JSON key: "sub-limiter-ttl", env SUB-LIMITER-TTL, --sub-limiter-ttl]
+	//   Sub Limiter TTL [JSON key: "sub-limiter-ttl", env SUB_LIMITER_TTL, --sub-limiter-ttl]
 	//     Time period the limiter will check over before the limiter trips (default: 1h0m0s)
 }
