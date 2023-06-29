@@ -8,7 +8,7 @@ import (
 	"io"
 	"time"
 
-	"bitbucket.org/idomdavis/tonic/config"
+	"github.com/domdavis/tonic/config"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 )

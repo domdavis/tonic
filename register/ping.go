@@ -3,7 +3,7 @@ package register
 import (
 	"net/http"
 
-	"bitbucket.org/idomdavis/tonic/middleware"
+	"github.com/domdavis/tonic/middleware"
 	"github.com/gin-gonic/gin"
 )
 

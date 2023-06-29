@@ -3,8 +3,8 @@ package tonic_test
 import (
 	"testing"
 
-	"bitbucket.org/idomdavis/tonic"
-	"bitbucket.org/idomdavis/tonic/config"
+	"github.com/domdavis/tonic"
+	"github.com/domdavis/tonic/config"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )

@@ -3,7 +3,7 @@ package config
 import (
 	"time"
 
-	"bitbucket.org/idomdavis/gofigure"
+	"github.com/domdavis/gofigure"
 )
 
 // Security settings.

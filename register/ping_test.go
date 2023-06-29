@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"bitbucket.org/idomdavis/tonic/middleware"
-	"bitbucket.org/idomdavis/tonic/register"
+	"github.com/domdavis/tonic/middleware"
+	"github.com/domdavis/tonic/register"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )

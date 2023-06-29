@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"bitbucket.org/idomdavis/tonic/config"
+	"github.com/domdavis/tonic/config"
 	"github.com/sirupsen/logrus"
 )
 

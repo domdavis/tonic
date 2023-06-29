@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"bitbucket.org/idomdavis/tonic"
+	"github.com/domdavis/tonic"
 )
 
 func ExampleTimebox() {

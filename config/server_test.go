@@ -3,8 +3,8 @@ package config_test
 import (
 	"fmt"
 
-	"bitbucket.org/idomdavis/gofigure"
-	"bitbucket.org/idomdavis/tonic/config"
+	"github.com/domdavis/gofigure"
+	"github.com/domdavis/tonic/config"
 )
 
 func ExampleServer_Register() {
@@ -40,28 +40,28 @@ func ExampleServer_Register() {
 	//   Read Timeout: 1m0s
 	//
 	// usage:
-	//   Server Port [JSON key: "server-port", env SERVER-PORT, --server-port]
+	//   Server Port [JSON key: "server-port", env SERVER_PORT, --server-port]
 	//     HTTP Port to listen on (default: 8000)
 	//
-	//   Templates path [JSON key: "server-templates", env SERVER-TEMPLATES, --server-templates]
+	//   Templates path [JSON key: "server-templates", env SERVER_TEMPLATES, --server-templates]
 	//     Location of the server templates. Leave blank if not required
 	//
-	//   Static content path [JSON key: "server-static-content", env SERVER-STATIC-CONTENT, --server-static-content]
+	//   Static content path [JSON key: "server-static-content", env SERVER_STATIC_CONTENT, --server-static-content]
 	//     Location of the static content. Leave blank if not required
 	//
-	//   TLS Certificate Path [JSON key: "server-cert-path", env SERVER-CERT-PATH, --server-cert-path]
+	//   TLS Certificate Path [JSON key: "server-cert-path", env SERVER_CERT_PATH, --server-cert-path]
 	//     Path to TLS certificate file
 	//
-	//   TLS Kep Path [JSON key: "server-key-path", env SERVER-KEY-PATH, --server-key-path]
+	//   TLS Kep Path [JSON key: "server-key-path", env SERVER_KEY_PATH, --server-key-path]
 	//     Path to TLS key file
 	//
 	//   Dev Mode [--dev]
 	//     Set development mode (default: false)
 	//
-	//   Write Timeout [JSON key: "server-write-timeout", env SERVER-WRITE-TIMEOUT, --server-write-timeout]
+	//   Write Timeout [JSON key: "server-write-timeout", env SERVER_WRITE_TIMEOUT, --server-write-timeout]
 	//     Write timeout for the server (default: 1m0s)
 	//
-	//   Read Timeout [JSON key: "server-read-timeout", env SERVER-READ-TIMEOUT, --server-read-timeout]
+	//   Read Timeout [JSON key: "server-read-timeout", env SERVER_READ_TIMEOUT, --server-read-timeout]
 	//     Read timeout for the server (default: 1m0s)
 }
 

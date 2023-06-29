@@ -1,9 +1,9 @@
-module bitbucket.org/idomdavis/tonic
+module github.com/domdavis/tonic
 
-go 1.19
+go 1.20
 
 require (
-	bitbucket.org/idomdavis/gofigure v0.2.3
+	github.com/domdavis/gofigure v1.0.0
 	github.com/gin-gonic/gin v1.9.0
 	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/sirupsen/logrus v1.9.0

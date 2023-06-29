@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"bitbucket.org/idomdavis/tonic"
-	"bitbucket.org/idomdavis/tonic/config"
+	"github.com/domdavis/tonic"
+	"github.com/domdavis/tonic/config"
 	"github.com/stretchr/testify/assert"
 )
 
