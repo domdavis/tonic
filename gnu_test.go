@@ -31,5 +31,5 @@ func ExampleGNU() {
 	fmt.Println(w.Result().Header.Values(tonic.Clacks))
 
 	// Output:
-	// [GNU Terry Pratchett, Russel Winder]
+	// [GNU Terry Pratchett, Russel Winder, Malcom Cleaton (cleatoma)]
 }

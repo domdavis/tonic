@@ -1,0 +1,6 @@
+coverage.out
+cpu.prof
+mem.prof
+*.test
+*.iml
+.DS_Store
